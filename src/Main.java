@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.*;
 import java.util.ArrayList;
@@ -15,7 +14,7 @@ public class Main
             }
         }
         catch(IOException e){
-            System.out.println("Mistake!");
+            e.getMessage();
         }
         catch(NumberFormatException e){
             System.out.println("Incorrect input! Only integers are allowed!");
@@ -23,7 +22,7 @@ public class Main
     }
     public static Hashtable<String, Integer> dictionaryConstruction (int numberOfElements) {
         try(BufferedReader Reader = new BufferedReader (new InputStreamReader(System.in))){
-            Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
+            Hashtable<String, Integer> dict = new Hashtable<>();
             for(int j=1;j <= numberOfElements;j++){
                 String[] words = Reader.readLine().split(" ");
                 dict.merge(words[0], Integer.parseInt(words[1]), Integer::sum);
@@ -31,14 +30,12 @@ public class Main
             return dict;
         }
         catch(IOException e){
-            System.out.println("Mistake!");
-            Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
-            return dict;
+            e.getMessage();
+            return new Hashtable<>();
         }
         catch(ArrayIndexOutOfBoundsException e){
             System.out.println("Enter data and number of push ups separated by space");
-            Hashtable<String, Integer> dict = new Hashtable<String, Integer>();
-            return dict;
+            return new Hashtable<>();
         }
     }
     public static List<String> writeToFileAndRecord (Hashtable<String, Integer> dict) {
@@ -46,9 +43,9 @@ public class Main
         try(FileWriter outputFile = new FileWriter("output.txt")){
             String newLine = System.getProperty("line.separator");
             int maxValue = 0;
-            List<String> yearsMax = new ArrayList<String>(); //здесь создаю список, чтобы если несколько дат с максимумом есть, то их можно вывести
+            List<String> yearsMax = new ArrayList<>();
             for(String key : years) {
-                outputFile.write(key + " " + String.valueOf(dict.get(key)) + newLine);
+                outputFile.write(key + " " + dict.get(key) + newLine);
                 if (dict.get(key) > maxValue){
                     maxValue = dict.get(key);
                     yearsMax.clear();
@@ -61,18 +58,12 @@ public class Main
             yearsMax.add(String.valueOf(maxValue));
             return yearsMax;
         }
-        catch (FileNotFoundException e) {
-            System.out.println("Can not find this file!");
-            List<String> yearsMax = new ArrayList<String>();
-            return yearsMax;
-        }
+
         catch(IOException e){
-            System.out.println("Mistake!");
-            List<String> yearsMax = new ArrayList<String>();
-            return yearsMax;
+            e.getMessage();
+            return new ArrayList<>();
         }
 
     }
 }
-
 
